@@ -19,11 +19,11 @@ public class PlayerController : MonoBehaviour
     public float lookSensitivity;
     private Vector2 mouseDelta;
 
-    private Rigidbody _rigidbody;
+    private Rigidbody rb;
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Start()
@@ -46,9 +46,9 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
         dir *= moveSpeed;
-        dir.y = _rigidbody.velocity.y;
+        dir.y = rb.velocity.y;
 
-        _rigidbody.velocity = dir;
+        rb.velocity = dir;
     }
 
     void CameraLook()
@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
     {
         if(context.phase == InputActionPhase.Started && IsGrounded())
         {
-            _rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
+            rb.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
         }
     }
 
