@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [Header("Moverment")]
     public float moveSpeed;
     public float jumpPower;
-    private Vector2 curMovementInput;
+    private Vector2 curMovementInput; // 현재 입력값
     public LayerMask groundLayerMask;
 
     [Header("Look")]
@@ -16,8 +17,12 @@ public class PlayerController : MonoBehaviour
     public float minXLook;
     public float maxXLook;
     private float camCurXRot;
-    public float lookSensitivity;
-    private Vector2 mouseDelta;
+    public float lookSensitivity; // 카메라 회전 민감도
+    private Vector2 mouseDelta; // 마우스 변화값
+    public Action inventory;
+
+    [HideInInspector]
+    public bool canLook = true;
 
     private Rigidbody rb;
 
@@ -28,10 +33,10 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 숨기기
     }
 
-    // Update is called once per frame
+    // 물리 연산 있으면 Fixed로 쓰는게 좋음
     void FixedUpdate()
     {
         Move();
@@ -39,7 +44,10 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        CameraLook();
+        if (canLook)
+        {
+            CameraLook();
+        }
     }
 
     void Move()
@@ -105,5 +113,21 @@ public class PlayerController : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void OnInventory(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Started)
+        {
+            inventory?.Invoke();
+            ToggleCursor();
+        }
+    }
+
+    void ToggleCursor()
+    {
+        bool toggle = Cursor.lockState == CursorLockMode.Locked;
+        Cursor.lockState = toggle ? CursorLockMode.None : CursorLockMode.Locked;
+        canLook = !toggle;
     }
 }

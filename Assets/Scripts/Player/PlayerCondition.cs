@@ -1,19 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCondition : MonoBehaviour
+public interface IDamagalbe
+{
+    void TakePhysicalDamage(int damage);
+}
+
+public class PlayerCondition : MonoBehaviour, IDamagalbe
 {
     public UICondition uiCondition;
 
     Condition health { get { return uiCondition.health; } }
 
-    void Update()
+    public event Action onTakeDamage;
+
+    private void Update()
     {
-        if(health.curValue == 0f)
-        {
-            Die();
-        }
+        //if (health.curValue == 0f)
+        //{
+        //    Die();
+        //}
     }
 
     public void Heal(float amout)
@@ -29,5 +37,11 @@ public class PlayerCondition : MonoBehaviour
     public void Die()
     {
         Debug.Log("Á×À½");
+    }
+
+    public void TakePhysicalDamage(int damage)
+    {
+        health.Subtract(damage);
+        onTakeDamage?.Invoke();
     }
 }
