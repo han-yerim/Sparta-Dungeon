@@ -31,7 +31,7 @@ public class PlayerDamage : MonoBehaviour
                 int damage = Mathf.RoundToInt(Mathf.Abs(lastYVelocity) * 2);
                 damage = Mathf.Min(damage, maxFallDamage);
                 playerCondition.TakePhysicalDamage(damage);
-                Debug.Log($"낙하 데미지 {damage} 입음!");
+                Debug.Log($"낙하 데미지 {damage} !");
             }
         }
 

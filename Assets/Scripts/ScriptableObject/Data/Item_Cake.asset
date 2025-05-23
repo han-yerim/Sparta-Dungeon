@@ -22,3 +22,6 @@ MonoBehaviour:
   consumables:
   - type: 0
     value: 100
+  effectType: 0
+  effectValue: 100
+  duration: 0

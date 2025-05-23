@@ -6,8 +6,13 @@ public class UICondition : MonoBehaviour
 {
     public Condition health;
 
-    void Start()
+    void Awake()
     {
-        CharacterManager.Instance.Player.condition.uiCondition = this;
+        if (health == null)
+        {
+            health = new Condition();
+        }
+
+        health.Set(health.maxValue); // 체력 초기화
     }
 }

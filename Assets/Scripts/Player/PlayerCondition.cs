@@ -26,6 +26,14 @@ public class PlayerCondition : MonoBehaviour, IDamagalbe
         }
     }
 
+    void Awake()
+    {
+        if (uiCondition == null)
+        {
+            uiCondition = GetComponent<UICondition>();
+        }
+    }
+
     public void Heal(float amout)
     {
         health.Add(amout);

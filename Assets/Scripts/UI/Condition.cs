@@ -48,4 +48,9 @@ public class Condition : MonoBehaviour
         curValue = Mathf.Clamp(curValue, 0, maxValue);
         UpdateBar();
     }
+
+    public void Set(float value)
+    {
+        curValue = Mathf.Clamp(value, 0, maxValue);
+    }
 }
