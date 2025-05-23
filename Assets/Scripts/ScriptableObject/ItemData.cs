@@ -43,5 +43,5 @@ public class ItemData : ScriptableObject
     public ItemDataConsumbale[] consumables;
     public ConsumableType effectType;
     public float effectValue;
-    public float duration = 5f;
+    public float duration;
 }
