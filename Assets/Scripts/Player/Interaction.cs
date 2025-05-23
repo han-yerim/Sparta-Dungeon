@@ -15,7 +15,7 @@ public class Interaction : MonoBehaviour
     private IInteractable curInteractable; // 현재 상호작용 인터페이스
 
     public TextMeshProUGUI promptText;
-    public TextMeshProUGUI uiText;
+    public GameObject promptPanel;
     private Camera camera;
 
     void Start()
@@ -38,14 +38,19 @@ public class Interaction : MonoBehaviour
                 {
                     curInteractGameObject = hit.collider.gameObject;
                     curInteractable = hit.collider.GetComponent<IInteractable>();
-                    SetPromptText();
+
+                    if (curInteractable != null)
+                    {
+                        SetPromptText(); // 텍스트 설정
+                        promptPanel.SetActive(true); // UI 이미지+텍스트 보이기
+                    }
                 }
             }
             else
             {
                 curInteractGameObject = null;
                 curInteractable = null;
-                promptText.gameObject.SetActive(false);
+                promptPanel.SetActive(false);
             }
         }
     }

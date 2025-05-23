@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Item_Cookie
   m_EditorClassIdentifier: 
   displayName: "\uACFC\uC790"
-  description: "\uC18D\uB3C4\uAC00 \uBE68\uB77C\uC9D1\uB2C8\uB2E4."
+  description: "\uC774\uB3D9\uC18D\uB3C4\uAC00 \uBE68\uB77C\uC9D1\uB2C8\uB2E4."
   type: 0
   icon: {fileID: 21300000, guid: db94121d322c5b74bbd20369a66b51a7, type: 3}
   dropPrefab: {fileID: 569736621193974213, guid: c1e9dc588855e25438b7b88c0062b973, type: 3}

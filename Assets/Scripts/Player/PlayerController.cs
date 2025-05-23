@@ -7,8 +7,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("Moverment")]
-    public float moveSpeed;
-    public float jumpPower;
+    public float moveSpeed = 5f;
+    public float jumpPower = 80f;
     private Vector2 curMovementInput; // 현재 입력값
     public LayerMask groundLayerMask;
 
