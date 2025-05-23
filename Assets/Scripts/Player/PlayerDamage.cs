@@ -12,9 +12,7 @@ public class PlayerDamage : MonoBehaviour
     private PlayerCondition playerCondition;
     private float lastYVelocity;
     private bool wasGrounded;
-    public Action onTakeDamage;
 
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -33,7 +31,6 @@ public class PlayerDamage : MonoBehaviour
                 int damage = Mathf.RoundToInt(Mathf.Abs(lastYVelocity) * 2);
                 damage = Mathf.Min(damage, maxFallDamage);
                 playerCondition.TakePhysicalDamage(damage);
-                onTakeDamage?.Invoke();
                 Debug.Log($"낙하 데미지 {damage} 입음!");
             }
         }
@@ -44,6 +41,6 @@ public class PlayerDamage : MonoBehaviour
 
     bool CheckIsGrounded()
     {
-        return Physics.Raycast(transform.position, Vector3.down, 1.1f, LayerMask.GetMask("Ground"));
+        return Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, 1.2f, LayerMask.GetMask("Ground"));
     }
 }

@@ -8,9 +8,15 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Moverment")]
     public float moveSpeed = 5f;
-    public float jumpPower = 80f;
+    public float jumpPower = 100f;
     private Vector2 curMovementInput; // 현재 입력값
     public LayerMask groundLayerMask;
+
+    private float baseMoveSpeed;
+    private float baseJumpPower;
+
+    private Coroutine speedBuffRoutine;
+    private Coroutine jumpBuffRoutine;
 
     [Header("Look")]
     public Transform cameraContainer;
@@ -34,6 +40,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 숨기기
+        baseMoveSpeed = moveSpeed;
+        baseJumpPower = jumpPower;
     }
 
     // 물리 연산 있으면 Fixed로 쓰는게 좋음
@@ -129,5 +137,37 @@ public class PlayerController : MonoBehaviour
         bool toggle = Cursor.lockState == CursorLockMode.Locked;
         Cursor.lockState = toggle ? CursorLockMode.None : CursorLockMode.Locked;
         canLook = !toggle;
+    }
+
+    public void ApplySpeedBuff(float multiplier, float duration)
+    {
+        if (speedBuffRoutine != null)
+            StopCoroutine(speedBuffRoutine);
+
+        speedBuffRoutine = StartCoroutine(SpeedBuff(multiplier, duration));
+    }
+
+    public void ApplyJumpBuff(float multiplier, float duration)
+    {
+        if (jumpBuffRoutine != null)
+            StopCoroutine(jumpBuffRoutine);
+
+        jumpBuffRoutine = StartCoroutine(JumpBuff(multiplier, duration));
+    }
+
+    private IEnumerator SpeedBuff(float multiplier, float duration)
+    {
+        moveSpeed = baseMoveSpeed * multiplier;
+        yield return new WaitForSeconds(duration);
+        moveSpeed = baseMoveSpeed;
+        speedBuffRoutine = null;
+    }
+
+    private IEnumerator JumpBuff(float multiplier, float duration)
+    {
+        jumpPower = baseJumpPower * multiplier;
+        yield return new WaitForSeconds(duration);
+        jumpPower = baseJumpPower;
+        jumpBuffRoutine = null;
     }
 }

@@ -18,10 +18,12 @@ public class PlayerCondition : MonoBehaviour, IDamagalbe
 
     private void Update()
     {
-        //if (health.curValue == 0f)
-        //{
-        //    Die();
-        //}
+        if (uiCondition == null || health == null) return;
+
+        if (health.curValue <= 0f)
+        {
+            Die();
+        }
     }
 
     public void Heal(float amout)
@@ -34,14 +36,14 @@ public class PlayerCondition : MonoBehaviour, IDamagalbe
         health.Add(amout);
     }
 
-    public void Die()
-    {
-        Debug.Log("Á×À½");
-    }
-
     public void TakePhysicalDamage(int damage)
     {
         health.Subtract(damage);
         onTakeDamage?.Invoke();
+    }
+
+    public void Die()
+    {
+        Debug.Log("Á×À½");
     }
 }

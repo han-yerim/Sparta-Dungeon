@@ -187,13 +187,25 @@ public class UIInventory : MonoBehaviour
         {
             for(int i = 0; i < selectedItem.consumables.Length; ++i)
             {
-                switch(selectedItem.consumables[i].type)
+                float value = selectedItem.consumables[i].value;
+                var type = selectedItem.consumables[i].type;
+
+                switch (type)
                 {
                     case ConsumableType.Health:
-                        condition.Heal(selectedItem.consumables[i].value);
+                        condition.Heal(value);
+                        break;
+
+                    case ConsumableType.Speed:
+                        controller.ApplySpeedBuff(value, selectedItem.duration);
+                        break;
+
+                    case ConsumableType.Jump:
+                        controller.ApplyJumpBuff(value, selectedItem.duration);
                         break;
                 }
             }
+            RemoveSelectedItem();
         }
     }
 

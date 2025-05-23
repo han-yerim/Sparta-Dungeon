@@ -5,34 +5,47 @@ using UnityEngine.UI;
 
 public class Condition : MonoBehaviour
 {
+    [Header("Condition Values")]
+    public float startValue = 100f;
+    public float maxValue = 100f;
     public float curValue;
-    public float startValue;
-    public float maxValue;
+
+    [Header("Passive Stats")]
     public float passiveValue;
+
+    [Header("UI")]
     public Image uiBar;
 
     private void Start()
     {
-        curValue = startValue;
+        curValue = Mathf.Clamp(startValue, 0, maxValue);
+        UpdateBar();
     }
 
     private void Update()
     {
-        uiBar.fillAmount = GetPercentage();
+        UpdateBar();
     }
 
-    float GetPercentage()
+    private void UpdateBar()
     {
-        return curValue / maxValue;
+        if (uiBar != null)
+        {
+            uiBar.fillAmount = curValue / maxValue;
+        }
     }
 
     public void Add(float value)
     {
-        curValue += Mathf.Min(curValue + value, maxValue);
+        curValue += value;
+        curValue = Mathf.Clamp(curValue, 0, maxValue);
+        UpdateBar();
     }
 
     public void Subtract(float value)
     {
-        curValue -= Mathf.Max(curValue - value, 0);
+        curValue -= value;
+        curValue = Mathf.Clamp(curValue, 0, maxValue);
+        UpdateBar();
     }
 }
